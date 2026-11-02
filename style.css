@@ -73,6 +73,7 @@ body.ready .name span:nth-child(4){transition-delay:.24s}body.ready .name span:n
 .projects{display:grid;gap:2rem}
 .card{display:grid;border-radius:24px;overflow:hidden;background:var(--card);border:1px solid var(--line);transition:transform .15s ease-out,box-shadow .4s,border-color .4s;transform-style:preserve-3d;will-change:transform}
 .card.blue:hover{border-color:var(--blue);box-shadow:0 30px 80px -20px rgba(59,130,246,.55)}
+.card.pink:hover{border-color:#fe2c55;box-shadow:0 30px 80px -20px rgba(254,44,85,.45)}
 .card.violet:hover{border-color:var(--violet);box-shadow:0 30px 80px -20px rgba(139,92,246,.6)}
 .card img{width:100%;height:auto;display:block;transition:transform .8s}
 .card:hover img{transform:scale(1.05)}
@@ -81,7 +82,7 @@ body.ready .name span:nth-child(4){transition-delay:.24s}body.ready .name span:n
 .info h3{font-size:1.5rem;margin-bottom:.5rem}
 .info p{color:var(--mute);margin-bottom:1rem}
 .info span{font-weight:700;border-bottom:2px solid currentColor}
-.card.blue .info span{color:var(--blue)}.card.violet .info span{color:var(--violet)}
+.card.pink .info span{color:#fe2c55}.card.blue .info span{color:var(--blue)}.card.violet .info span{color:var(--violet)}
 
 .steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.5rem;position:relative}
 .steps::before{content:"";position:absolute;top:7px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--violet))}
