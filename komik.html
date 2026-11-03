@@ -167,7 +167,12 @@ function home(my){
     const el=$("#g");el.innerHTML=skel(9);
     try{
       const r=await req(`/komiku/${homeTab==="new"?"new-series":"populer"}?type=semua`);if(my!==rid)return;
-      const all=arr(r).map(kItem).filter(ok),l=homeType==="semua"?all:all.filter(a=>a.type.toLowerCase()===homeType);
+      let all=arr(r).map(kItem).filter(ok);
+      if(!all.length&&homeTab==="pop"){
+        const rs=await Promise.allSettled(["action","isekai","reincarnation","martial-arts"].map(s=>req(`/komiku/genre-detail?genre=${s}&page=1`)));if(my!==rid)return;
+        const u=new Set();all=rs.flatMap(x=>x.status==="fulfilled"?arr(x.value):[]).map(kItem).filter(a=>ok(a)&&!u.has(a.u)&&u.add(a.u));
+      }
+      const l=homeType==="semua"?all:all.filter(a=>a.type.toLowerCase()===homeType);
       el.innerHTML=l.map(card).join("")||msg(all.length?"Tidak ada "+homeType+" di daftar ini. Coba jenis lain.":"Daftar ini sedang kosong dari server. Coba tab Series Baru, atau cari judulnya di kolom pencarian.");
     }catch(e){if(my===rid)el.innerHTML=bad(e)}
   };

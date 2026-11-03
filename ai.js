@@ -108,5 +108,5 @@ setTimeout(()=>tip.classList.remove("show"),13000);
 
 // tombol di hero
 const cta=document.querySelector(".hero .cta");
-if(cta){const b=document.createElement("button");b.type="button";b.className="btn ghost";b.textContent="Tanya Asisten AI ✨";b.onclick=()=>open(true);cta.appendChild(b)}
+if(cta){const b=document.createElement("button");b.type="button";b.className="btn ai";b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.2 5.8L20 10l-5.8 2.2L12 18l-2.2-5.8L4 10l5.8-2.2z"/></svg> Tanya Asisten AI';b.onclick=()=>open(true);cta.appendChild(b)}
 })();

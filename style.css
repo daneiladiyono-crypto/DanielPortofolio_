@@ -38,11 +38,21 @@ body.ready .name span:nth-child(4){transition-delay:.24s}body.ready .name span:n
 .caret{display:inline-block;width:3px;height:1.1em;background:var(--blue);margin-left:4px;vertical-align:middle;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 .cta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
-.btn{padding:.9rem 1.7rem;border-radius:99px;font-weight:700;transition:transform .2s,box-shadow .3s,background .3s;border:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.95rem 1.6rem;border-radius:99px;font:inherit;font-weight:700;color:var(--ink);cursor:pointer;background:rgba(255,255,255,.05);backdrop-filter:blur(10px);border:1px solid var(--line);position:relative;overflow:hidden;transition:transform .25s,box-shadow .3s,border-color .3s}
+.btn svg{width:1.15em;height:1.15em;fill:currentColor;flex:none}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.22) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s;pointer-events:none}
+.btn:hover::after{transform:translateX(120%)}
+.btn:hover{transform:translateY(-3px)}
 .btn.main{background:linear-gradient(135deg,var(--blue),var(--violet));border-color:transparent}
 .btn.main:hover{box-shadow:0 0 38px rgba(99,102,241,.6)}
-.btn.ghost:hover{background:rgba(255,255,255,.08)}
-.btn:hover{transform:translateY(-3px)}
+.btn.komik{background:linear-gradient(135deg,rgba(34,211,238,.18),rgba(59,130,246,.28));border-color:rgba(34,211,238,.55)}
+.btn.komik:hover{box-shadow:0 0 30px rgba(34,211,238,.4)}
+.btn.wa{background:rgba(37,211,102,.14);border-color:rgba(37,211,102,.55)}
+.btn.wa:hover{box-shadow:0 0 30px rgba(37,211,102,.4)}
+.btn.tt{background:linear-gradient(135deg,rgba(254,44,85,.16),rgba(34,211,238,.14));border-color:rgba(254,44,85,.5)}
+.btn.tt:hover{box-shadow:0 0 30px rgba(254,44,85,.35)}
+.btn.ai{background:linear-gradient(135deg,rgba(59,130,246,.25),rgba(139,92,246,.3));border-color:rgba(139,92,246,.65)}
+.btn.ai:hover{box-shadow:0 0 34px rgba(139,92,246,.55)}
 .scroll{position:absolute;bottom:2rem;left:5vw;width:26px;height:44px;border:2px solid var(--mute);border-radius:14px}
 .scroll i{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;background:var(--ink);border-radius:2px;animation:drop 1.6s infinite}
 @keyframes drop{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(16px)}}
@@ -111,3 +121,5 @@ footer a:hover{color:var(--ink)}
 }
 @media(hover:none){#glow{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.rv,.name span{opacity:1;transform:none}#loader{display:none}.bar i{width:var(--w)}}
+
+@media(max-width:600px){.hero .cta{display:grid;grid-template-columns:1fr 1fr}.hero .cta .btn.main,.hero .cta .btn.ai{grid-column:1/-1}.hero .cta .btn{padding:.95rem .8rem}}
