@@ -1,12 +1,25 @@
 (()=>{
 const API="https://api.synoxcloud.xyz/ai-chat/asynt-ai";
-const CTX="Kamu adalah Asisten AI di website portofolio Daniel. Daniel: anak muda yang suka teknologi, pemrograman, dan pengembangan website, lebih suka langsung mencoba daripada membayangkan. Skill: editing 80%, design 60%, coding 55%. Proyek: ARVEX Seleksi, Daniel.Mail, TikTok Downloader, Neel Numbers. Kontak: WhatsApp wa.me/6285199384842, TikTok @_danielk4zz. Jawab singkat, ramah, dalam bahasa Indonesia.";
+const CTX="Kamu Asisten AI di website portofolio Daniel (BUKAN support Asyntai). Jawab singkat, ramah, bahasa Indonesia, hanya berdasarkan info ini. Daniel: anak muda suka teknologi, pemrograman, web; lebih suka langsung mencoba. Skill: editing 80%, design 60%, coding 55%. Proyek: Daniel.Mail, ARVEX Seleksi, TikTok Downloader, Neel Numbers. Kontak: wa.me/6285199384842, TikTok @_danielk4zz. Jika di luar info ini, bilang belum tahu dan arahkan ke WhatsApp Daniel.";
+const L={
+ proj:"Daniel punya 4 website yang sudah live:\n• **Daniel.Mail**: layanan email sementara. https://danielmailv2.vercel.app/\n• **ARVEX Seleksi**: seleksi anggota clan komunitas. https://arvex-seleksi.vercel.app/\n• **TikTok Downloader**: unduh video tanpa watermark, foto slideshow, dan MP3. https://tiktok-download-green.vercel.app\n• **Neel Numbers**: nomor virtual untuk OTP WhatsApp. https://virtualnumber-six.vercel.app/",
+ who:"Daniel adalah anak muda yang tertarik besar pada teknologi, pemrograman, dan pengembangan website. Dia lebih suka langsung mencoba daripada cuma membayangkan, dan punya kemauan kuat untuk belajar dan mengembangkan ide.",
+ skill:"Penilaian Daniel untuk dirinya sendiri: **Editing 80%**, **Design 60%**, **Coding 55%**. Alat yang dipakai: HTML, CSS, JavaScript, GitHub, Vercel, dan video editing. Angkanya masih terus naik.",
+ contact:"Kamu bisa menghubungi Daniel lewat:\n• WhatsApp: https://wa.me/6285199384842\n• TikTok: https://www.tiktok.com/@_danielk4zz",
+ arvex:"**ARVEX Seleksi** adalah website seleksi anggota clan komunitas, lengkap dengan halaman Rules dan FAQ. Coba di https://arvex-seleksi.vercel.app/",
+ mail:"**Daniel.Mail** adalah layanan email sementara untuk menerima pesan saat mencoba layanan online. Buat inbox baru langsung dari browser di https://danielmailv2.vercel.app/",
+ dl:"**TikTok Downloader** mengunduh video TikTok tanpa watermark hingga Full HD 1080p, foto slideshow, dan audio MP3. Coba di https://tiktok-download-green.vercel.app",
+ neel:"**Neel Numbers** menyediakan nomor virtual untuk menerima kode OTP WhatsApp. Dapat nomor acak, lalu cek OTP-nya langsung dari browser di https://virtualnumber-six.vercel.app/",
+ hi:"Halo juga! Ada yang mau kamu tahu soal Daniel, proyeknya, atau skillnya?"
+};
+const RULES=[[/arvex|seleksi|clan/,"arvex"],[/daniel\.?mail|email sementara|temp.?mail/,"mail"],[/downloader|download|unduh|watermark/,"dl"],[/neel|nomor virtual|virtual number|otp/,"neel"],[/hubung|kontak|whatsapp|\bwa\b|tiktok|sosmed|sosial media/,"contact"],[/skill|kemampuan|keahlian|bisa apa|coding|desain|design|editing/,"skill"],[/proyek|project|karya|portofolio|website apa/,"proj"],[/siapa|tentang|profil|biografi|perkenal/,"who"],[/^(halo|hai|hi|hello|assalamualaikum|p)\b/,"hi"]];
+const local=t=>{const q=t.toLowerCase();for(const[r,k]of RULES)if(r.test(q))return L[k];return""};
 const HI="Halo! Aku asisten AI di portofolio Daniel ✨ Mau tahu soal proyek, skill, atau cara menghubungi Daniel? Tanya aja, atau pilih di bawah.";
 const SUG=["Siapa Daniel?","Proyek apa saja?","Skill Daniel","Cara hubungi Daniel"];
 const newSid=()=>"web"+Math.random().toString(36).slice(2,10)+Date.now().toString(36);
 let sid;try{sid=localStorage.getItem("dn-ai")}catch(e){}
 if(!sid){sid=newSid();try{localStorage.setItem("dn-ai",sid)}catch(e){}}
-let first=true,busy=false;
+let busy=false;
 
 const root=document.createElement("div");root.id="ai";
 root.innerHTML=`
@@ -53,21 +66,26 @@ function setBusy(b){busy=b;input.disabled=b;$("aiSend").disabled=b}
 async function send(t){
   t=t.trim();if(!t||busy)return;
   chips.hidden=true;add("user",t);input.value="";setBusy(true);
-  const tp=typing(),ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),30000);
-  const q=first?CTX+" Pertanyaan: "+t:t;
+  const tp=typing(),loc=local(t);
+  if(loc){
+    await new Promise(r=>setTimeout(r,550+Math.random()*450));
+    tp.remove();add("bot",loc);setBusy(false);if(panel.classList.contains("open"))input.focus();return;
+  }
+  const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),30000);
   try{
-    const r=await fetch(API+"?text="+encodeURIComponent(q)+"&session="+encodeURIComponent(sid)+"&apikey=FREE",{signal:ctl.signal});
+    const r=await fetch(API+"?text="+encodeURIComponent(CTX+" Pertanyaan pengguna: "+t)+"&session="+encodeURIComponent(sid)+"&apikey=FREE",{signal:ctl.signal});
     if(!r.ok)throw new Error("Server membalas "+r.status);
     const raw=await r.text();let j;try{j=JSON.parse(raw)}catch(e){j=raw}
-    const out=pick(j);if(!out)throw new Error("Balasan kosong");
-    first=false;tp.remove();add("bot",out);
+    let out=pick(j);if(!out)throw new Error("Balasan kosong");
+    if(/asyntai/i.test(out))out="Hmm, itu di luar yang aku tahu. Aku paling paham soal Daniel, proyek, dan skillnya. Untuk hal lain, hubungi Daniel langsung: https://wa.me/6285199384842";
+    tp.remove();add("bot",out);
   }catch(e){
     tp.remove();add("bot","Maaf, aku belum bisa menjawab sekarang ("+(e.name==="AbortError"?"waktu habis":e.message)+"). Coba kirim lagi sebentar lagi ya.");
   }finally{clearTimeout(to);setBusy(false);if(panel.classList.contains("open"))input.focus()}
 }
 
 function reset(){
-  msgs.innerHTML="";first=true;sid=newSid();try{localStorage.setItem("dn-ai",sid)}catch(e){}
+  msgs.innerHTML="";sid=newSid();try{localStorage.setItem("dn-ai",sid)}catch(e){}
   add("bot",HI);chips.hidden=false;
 }
 chips.innerHTML=SUG.map(s=>'<button type="button">'+s+"</button>").join("");
