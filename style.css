@@ -148,3 +148,26 @@ footer a:hover{color:var(--ink)}
 .btn.ai:hover svg{transform:rotate(180deg) scale(1.25)}
 .rip{position:absolute;border-radius:50%;pointer-events:none;background:rgba(255,255,255,.35);transform:scale(0);animation:rip .65s ease-out forwards}
 @keyframes rip{to{transform:scale(3.5);opacity:0}}
+
+/* tombol versi vivid: ikon dalam bubble, gradasi animasi, glow */
+.btn{min-height:58px;padding:.7rem 1.5rem .7rem .8rem;gap:.8rem;font-size:1.02rem;color:#fff;border:0;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.25);background-size:200% 100%;animation:flow 7s linear infinite}
+@keyframes flow{to{background-position:200% 0}}
+.btn .bi{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);flex:none;transition:transform .4s cubic-bezier(.3,1.6,.5,1),background .3s}
+.btn .bi svg{width:20px;height:20px}
+.btn:hover .bi{background:rgba(255,255,255,.36);transform:scale(1.14) rotate(-10deg)}
+.btn:hover svg{transform:none!important}
+.btn.main svg{animation:none}
+.btn.main .bi svg{animation:rocket 1.8s ease-in-out infinite}
+@keyframes rocket{50%{transform:translate(2px,-3px)}}
+.btn.main{background-image:linear-gradient(120deg,#3b82f6,#8b5cf6,#ec4899,#3b82f6);box-shadow:0 12px 32px -8px rgba(139,92,246,.8)}
+.btn.komik{background-image:linear-gradient(120deg,#06b6d4,#3b82f6,#6366f1,#06b6d4);box-shadow:0 12px 32px -8px rgba(6,182,212,.7)}
+.btn.wa{background-image:linear-gradient(120deg,#22c55e,#10b981,#84cc16,#22c55e);box-shadow:0 12px 32px -8px rgba(34,197,94,.7)}
+.btn.tt{background-image:linear-gradient(120deg,#fe2c55,#c026d3,#25c7f4,#fe2c55);box-shadow:0 12px 32px -8px rgba(254,44,85,.65)}
+.btn.ai{background-image:linear-gradient(120deg,#8b5cf6,#d946ef,#6366f1,#8b5cf6);box-shadow:0 12px 32px -8px rgba(217,70,239,.7);animation:flow 7s linear infinite,aiGlow 2.4s ease-in-out infinite alternate}
+@keyframes aiGlow{to{box-shadow:0 14px 42px -4px rgba(217,70,239,.95)}}
+.btn:hover{filter:brightness(1.1) saturate(1.1)}
+.btn.main:hover{box-shadow:0 16px 44px -6px rgba(139,92,246,.95)}
+.btn.komik:hover{box-shadow:0 16px 44px -6px rgba(6,182,212,.9)}
+.btn.wa:hover{box-shadow:0 16px 44px -6px rgba(34,197,94,.9)}
+.btn.tt:hover{box-shadow:0 16px 44px -6px rgba(254,44,85,.85)}
+@media(max-width:600px){.hero .cta .btn{padding:.6rem .7rem .6rem .6rem;gap:.55rem;font-size:.93rem}.hero .cta .btn .bi{width:32px;height:32px}.hero .cta .btn .bi svg{width:17px;height:17px}}
