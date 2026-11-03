@@ -70,7 +70,8 @@ h2{font:500 1.5rem/1.2 Rubik;text-transform:capitalize}
 .ei{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#131d36;border-radius:18px;padding:16px 20px;width:100%;text-align:left}
 .ei b{font:500 1.05rem Rubik;display:block}.ei small{color:var(--mut)}
 .pl{width:40px;height:40px;border-radius:50%;background:#3a82e6;display:grid;place-items:center;font-size:22px;flex:none}
-.more{display:block;margin:22px auto 0;padding:12px 28px;border-radius:999px;background:var(--s2);font-weight:500}
+.more[hidden]{display:none}
+.more{display:flex;align-items:center;gap:.5rem;width:max-content;margin:22px auto 0;padding:12px 28px;border-radius:999px;background:var(--s2);font-weight:500}
 .note{color:var(--mut);font-size:.85rem;margin:14px 0}
 nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#0d131c;border-top:1px solid #172133;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
 .ni{max-width:720px;margin:0 auto;display:flex;justify-content:space-around}
@@ -81,9 +82,24 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#0d131c;border-
 .rtop b{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pages img{display:block;width:100%;max-width:720px;margin:0 auto;min-height:120px;background:var(--s)}
 .rnav{display:flex;gap:12px;max-width:720px;margin:0 auto;padding:20px 16px calc(24px + env(safe-area-inset-bottom))}
-.rnav a{flex:1;height:52px;border-radius:999px;display:grid;place-items:center;background:var(--s2);font-weight:600}
+.rnav a{flex:1;height:52px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:.5rem;background:var(--s2);font-weight:600}
 .rnav a.go{background:linear-gradient(90deg,#33b0ff,#1673d8)}.rnav a.off{opacity:.4;pointer-events:none}
 body.rd{padding-bottom:0}
+.tab{display:inline-flex;align-items:center;gap:8px}
+.tab,.chip,.go,.subb,.more,.rnav a,.ei,.back,.ni a{position:relative;overflow:hidden;transition:transform .2s,background .25s,box-shadow .25s,color .2s}
+.tab svg,.chip svg,.go svg,.subb svg,.more svg,.rnav a svg,.ni a svg,.back svg,.pl svg{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.tab:hover,.chip:hover,.more:hover,.rnav a:hover{transform:translateY(-2px)}
+.tab:hover svg,.chip:hover svg,.go:hover svg,.subb:hover svg,.more:hover svg,.rnav a:hover svg{transform:scale(1.25) rotate(-10deg)}
+.tab:active,.chip:active,.go:active,.subb:active,.more:active,.rnav a:active,.ei:active,.back:active{transform:scale(.94)}
+.go:hover{box-shadow:0 8px 28px rgba(51,176,255,.45)}
+.subb:hover{box-shadow:0 6px 22px rgba(45,155,255,.25)}
+.ei:hover{background:#18264a;transform:translateX(4px)}.ei:hover .pl{transform:scale(1.12)}
+.pl{transition:transform .25s}
+.back:hover{transform:translateX(-3px)}.back:hover svg{transform:translateX(-3px)}
+.ni a:active svg{transform:scale(.8)}.ni a.on svg{animation:pop .4s}
+@keyframes pop{50%{transform:scale(1.3)}}
+.rip{position:absolute;border-radius:50%;pointer-events:none;background:rgba(255,255,255,.3);transform:scale(0);animation:rip .65s ease-out forwards}
+@keyframes rip{to{transform:scale(3.5);opacity:0}}
 @media(min-width:700px){.app{max-width:1000px}.grid{grid-template-columns:repeat(5,1fr)}.ni{max-width:1000px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
@@ -104,6 +120,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const ls={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
 const BLOCK=/adult|hentai|ecchi|smut|sexual|shotacon|mature|gore|erotic|porn|dewasa/i;
 const P={home:"M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z",grid:"M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z",hist:"M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z",back:"M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z",play:"M8 5v14l11-7z",star:"M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z",sort:"M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z",open:"M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"};
+Object.assign(P,{sparkle:"M12 2l2.2 5.8L20 10l-5.8 2.2L12 18l-2.2-5.8L4 10l5.8-2.2z",trend:"M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z",book:"M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM6 4h5v8l-2.5-1.5L6 12V4z",phone:"M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z",layers:"M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z",tag:"M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4a2 2 0 0 0-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z",down:"M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z",prev:"M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z",next:"M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"});
 const I=Object.fromEntries(Object.entries(P).map(([k,v])=>[k,`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${v}"/></svg>`]));
 
 /* ---------- API ---------- */
@@ -160,8 +177,8 @@ let rid=0,homeTab="new",homeType="semua";
 function home(my){
   const h=ls.get("dk-hist",[]);
   app.innerHTML=(h.length?`<section><div class="sh"><h2>Terakhir Dibaca</h2><a href="#/riwayat">Selengkapnya ›</a></div><div class="hs">${h.slice(0,8).map(hcard).join("")}</div></section>`:"")+
-  `<div class="tabs" style="margin-top:18px" id="ht">${[["new","Series Baru"],["pop","Populer"]].map(([v,l])=>`<button class="tab ${homeTab===v?"on":""}" data-v="${v}">${l}</button>`).join("")}</div>
-  <div class="tabs" id="hy" style="margin-top:10px">${["semua","manga","manhwa","manhua"].map(v=>`<button class="tab ${homeType===v?"on":""}" data-v="${v}">${v[0].toUpperCase()+v.slice(1)}</button>`).join("")}</div>
+  `<div class="tabs" style="margin-top:18px" id="ht">${[["new","Series Baru",I.sparkle],["pop","Populer",I.trend]].map(([v,l,ic])=>`<button class="tab ${homeTab===v?"on":""}" data-v="${v}">${ic} ${l}</button>`).join("")}</div>
+  <div class="tabs" id="hy" style="margin-top:10px">${["semua","manga","manhwa","manhua"].map(v=>`<button class="tab ${homeType===v?"on":""}" data-v="${v}">${{semua:I.grid,manga:I.book,manhwa:I.phone,manhua:I.star}[v]} ${v[0].toUpperCase()+v.slice(1)}</button>`).join("")}</div>
   <section><div class="grid" id="g">${skel(9)}</div><p class="note">Komik dimuat dari layanan pihak ketiga (Komiku, Webtoon, MangaDex).</p></section>`;
   const load=async()=>{
     const el=$("#g");el.innerHTML=skel(9);
@@ -182,7 +199,7 @@ function home(my){
 
 async function search(src,q,my){
   const S=[["k","Komiku"],["wt","Webtoon"],["md","MangaDex"]];
-  app.innerHTML=`<div class="tabs" style="margin-top:16px">${S.map(([v,l])=>`<a class="tab ${v===src?"on":""}" href="#/cari/${v}/${E(q)}">${l}</a>`).join("")}</div><section><div class="sh"><h2 style="text-transform:none">Hasil “${esc(q)}”</h2></div><div class="grid" id="g">${skel(6)}</div></section>`;
+  app.innerHTML=`<div class="tabs" style="margin-top:16px">${S.map(([v,l])=>`<a class="tab ${v===src?"on":""}" href="#/cari/${v}/${E(q)}">${{k:I.book,wt:I.phone,md:I.layers}[v]} ${l}</a>`).join("")}</div><section><div class="sh"><h2 style="text-transform:none">Hasil “${esc(q)}”</h2></div><div class="grid" id="g">${skel(6)}</div></section>`;
   try{
     const r=src==="k"?await req(`/komiku/search?q=${E(q)}&page=1`):src==="wt"?await req(`/webtoon/search?query=${E(q)}&page=1`):await req(`/mangadex/search?title=${E(q)}&limit=20`);
     if(my!==rid)return;
@@ -195,14 +212,14 @@ async function genres(my){
   app.innerHTML=`<section><h2>Genre</h2><div class="chips" id="g">${msg("Memuat genre...")}</div></section>`;
   try{
     const l=arr(await req("/komiku/genre")).filter(x=>x.count>0&&!BLOCK.test(x.name+" "+x.slug));if(my!==rid)return;
-    $("#g").innerHTML=l.map(x=>`<a class="chip" href="#/genre/${E(x.slug)}">${esc(x.name)} <small>${x.count}</small></a>`).join("");
+    $("#g").innerHTML=l.map(x=>`<a class="chip" href="#/genre/${E(x.slug)}">${I.tag} ${esc(x.name)} <small>${x.count}</small></a>`).join("");
   }catch(e){if(my===rid)$("#g").innerHTML=bad(e)}
 }
 
 async function genreList(slug,my){
   if(BLOCK.test(slug)){app.innerHTML=`<section>${msg("Genre ini tidak tersedia.")}</section>`;return}
   let page=1;
-  app.innerHTML=`<section><div class="sh"><h2>${esc(slug.replace(/-/g," "))}</h2><a href="#/genre">Semua genre ›</a></div><div class="grid" id="g">${skel(9)}</div><button class="more" id="more" hidden>Muat lagi</button></section>`;
+  app.innerHTML=`<section><div class="sh"><h2>${esc(slug.replace(/-/g," "))}</h2><a href="#/genre">Semua genre ›</a></div><div class="grid" id="g">${skel(9)}</div><button class="more" id="more" hidden>${I.down} Muat lagi</button></section>`;
   const load=async()=>{
     try{
       const l=arr(await req(`/komiku/genre-detail?genre=${E(slug)}&page=${page}`)).map(kItem).filter(ok);if(my!==rid)return;
@@ -295,7 +312,7 @@ async function reader(src,id,extra,my){
   document.body.classList.add("rd");
   const wt=src==="wt",ep=wt?+extra||1:0,s=seen[id]||{};
   const back=wt?"#/wt/"+E(id):"#/md/"+E(extra);
-  const nav=wt?`<div class="rnav"><a class="${ep<=1?"off":""}" href="#/baca/wt/${E(id)}/${ep-1}">‹ Sebelumnya</a><a class="go" href="#/baca/wt/${E(id)}/${ep+1}">Berikutnya ›</a></div>`:`<div class="rnav"><a href="${back}">Kembali</a></div>`;
+  const nav=wt?`<div class="rnav"><a class="${ep<=1?"off":""}" href="#/baca/wt/${E(id)}/${ep-1}">${I.prev} Sebelumnya</a><a class="go" href="#/baca/wt/${E(id)}/${ep+1}">Berikutnya ${I.next}</a></div>`:`<div class="rnav"><a href="${back}">${I.back} Kembali</a></div>`;
   app.innerHTML=`<div class="rtop"><a class="back" href="${back}" aria-label="Kembali">${I.back}</a><b>${esc(s.t||"Baca")}${wt?" • Episode "+ep:""}</b></div><div class="pages" id="pg"></div><section id="st">${msg("Memuat halaman...")}</section>${nav}`;
   scrollTo(0,0);
   if(wt&&s.t)addHist({k:id,src:"wt",t:s.t,img:s.img,href:"#/baca/wt/"+E(id)+"/"+ep,sub:"Episode "+ep});
@@ -333,6 +350,12 @@ function route(){
 }
 $("#sf").addEventListener("submit",e=>{e.preventDefault();const q=$("#q").value.trim();if(q)location.hash="#/cari/k/"+E(q)});
 addEventListener("hashchange",route);route();
+document.addEventListener("pointerdown",e=>{
+  const t=e.target.closest(".tab,.chip,.go,.subb,.more,.rnav a,.ei,.ni a");if(!t||matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  const r=t.getBoundingClientRect(),d=Math.max(r.width,r.height),s=document.createElement("span");
+  s.className="rip";s.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;
+  t.appendChild(s);setTimeout(()=>s.remove(),700);
+});
 </script>
 </body>
 </html>

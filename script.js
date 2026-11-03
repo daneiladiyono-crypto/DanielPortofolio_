@@ -82,4 +82,25 @@ function draw(){
   if(!reduce)requestAnimationFrame(draw);
 }
 draw();
+
+// ripple saat tombol ditekan
+const RIP='.btn,.pill,.totop,.ai-chips button,.ai-form button';
+document.addEventListener('pointerdown',e=>{
+  const t=e.target.closest(RIP);if(!t||reduce)return;
+  const r=t.getBoundingClientRect(),d=Math.max(r.width,r.height),s=document.createElement('span');
+  s.className='rip';s.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;
+  t.appendChild(s);setTimeout(()=>s.remove(),700);
+});
+// tombol "magnet": sedikit mengikuti kursor
+if(!reduce&&matchMedia('(hover:hover)').matches){
+  let last=null;const clr=b=>{b.style.removeProperty('--mx');b.style.removeProperty('--my')};
+  document.addEventListener('pointermove',e=>{
+    const b=e.target.closest('.btn');
+    if(last&&last!==b){clr(last);last=null}
+    if(!b)return;last=b;
+    const r=b.getBoundingClientRect();
+    b.style.setProperty('--mx',((e.clientX-r.left-r.width/2)*.16)+'px');
+    b.style.setProperty('--my',((e.clientY-r.top-r.height/2)*.26)+'px');
+  });
+}
 })();

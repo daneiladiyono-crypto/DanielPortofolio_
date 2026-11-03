@@ -91,7 +91,10 @@ body.ready .name span:nth-child(4){transition-delay:.24s}body.ready .name span:n
 .info{padding:1.5rem 1.8rem 1.8rem}
 .info h3{font-size:1.5rem;margin-bottom:.5rem}
 .info p{color:var(--mute);margin-bottom:1rem}
-.info span{font-weight:700;border-bottom:2px solid currentColor}
+.info span{display:inline-flex;align-items:center;gap:.5rem;font-weight:700;padding:.5rem 1.1rem;border-radius:99px;border:1.5px solid currentColor;transition:background .3s,box-shadow .3s}
+.card.blue:hover .info span{background:rgba(59,130,246,.18);box-shadow:0 0 22px rgba(59,130,246,.35)}
+.card.violet:hover .info span{background:rgba(139,92,246,.18);box-shadow:0 0 22px rgba(139,92,246,.35)}
+.card.pink:hover .info span{background:rgba(254,44,85,.16);box-shadow:0 0 22px rgba(254,44,85,.3)}
 .card.pink .info span{color:#fe2c55}.card.blue .info span{color:var(--blue)}.card.violet .info span{color:var(--violet)}
 
 .steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.5rem;position:relative}
@@ -123,3 +126,25 @@ footer a:hover{color:var(--ink)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.rv,.name span{opacity:1;transform:none}#loader{display:none}.bar i{width:var(--w)}}
 
 @media(max-width:600px){.hero .cta{display:grid;grid-template-columns:1fr 1fr}.hero .cta .btn.main,.hero .cta .btn.ai{grid-column:1/-1}.hero .cta .btn{padding:.95rem .8rem}}
+
+/* ikon, ripple, interaksi */
+.ic{width:1.1em;height:1.1em;fill:currentColor;flex:none;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+#menu a{display:inline-flex;align-items:center;gap:.45rem}
+#menu a:hover .ic{transform:translateY(-2px) scale(1.2) rotate(-8deg)}
+.pill,.totop{position:relative;overflow:hidden}
+.pill{display:inline-flex;align-items:center;gap:.45rem}
+.card:hover .info span .ic{transform:translate(3px,-3px) scale(1.15)}
+.totop{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:99px;padding:.4rem 1rem;transition:transform .25s,border-color .3s,box-shadow .3s}
+.totop:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 0 22px rgba(59,130,246,.35)}
+.totop:hover .ic{transform:translateY(-4px)}
+.btn{transform:translate(var(--mx,0px),var(--my,0px))}
+.btn:hover{transform:translate(var(--mx,0px),calc(var(--my,0px) - 3px))}
+.btn:active{transform:scale(.95)}
+.btn.main svg{animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(3px)}}
+.btn.komik:hover svg{transform:rotate(-14deg) scale(1.25)}
+.btn.wa:hover svg{transform:scale(1.25) rotate(10deg)}
+.btn.tt:hover svg{transform:translateY(-3px) rotate(14deg) scale(1.2)}
+.btn.ai:hover svg{transform:rotate(180deg) scale(1.25)}
+.rip{position:absolute;border-radius:50%;pointer-events:none;background:rgba(255,255,255,.35);transform:scale(0);animation:rip .65s ease-out forwards}
+@keyframes rip{to{transform:scale(3.5);opacity:0}}

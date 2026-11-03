@@ -88,7 +88,8 @@ function reset(){
   msgs.innerHTML="";sid=newSid();try{localStorage.setItem("dn-ai",sid)}catch(e){}
   add("bot",HI);chips.hidden=false;
 }
-chips.innerHTML=SUG.map(s=>'<button type="button">'+s+"</button>").join("");
+const SIC=["M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z", "M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z", "M7 2v11h3v9l7-12h-4l4-8z", "M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"];
+chips.innerHTML=SUG.map((s,i)=>'<button type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+SIC[i]+'"/></svg> '+s+"</button>").join("");
 chips.addEventListener("click",e=>{const b=e.target.closest("button");if(b)send(b.textContent)});
 add("bot",HI);
 
