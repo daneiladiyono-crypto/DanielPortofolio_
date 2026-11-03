@@ -171,3 +171,45 @@ footer a:hover{color:var(--ink)}
 .btn.wa:hover{box-shadow:0 16px 44px -6px rgba(34,197,94,.9)}
 .btn.tt:hover{box-shadow:0 16px 44px -6px rgba(254,44,85,.85)}
 @media(max-width:600px){.hero .cta .btn{padding:.6rem .7rem .6rem .6rem;gap:.55rem;font-size:.93rem}.hero .cta .btn .bi{width:32px;height:32px}.hero .cta .btn .bi svg{width:17px;height:17px}}
+
+/* ===== versi kalem: warna lebih dalam, glow halus, animasi tombol ===== */
+.btn{animation:flow 14s linear infinite;text-shadow:none}
+.btn .bi{background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.btn:hover{filter:brightness(1.07)}
+.btn:hover .bi{background:rgba(255,255,255,.24)}
+.btn.main{background-image:linear-gradient(120deg,#2f5fd0,#5b4fd0,#7a4cc4,#2f5fd0);box-shadow:0 10px 24px -12px rgba(91,79,208,.7)}
+.btn.komik{background-image:linear-gradient(120deg,#1b6f8c,#2a5fb8,#3a52b0,#1b6f8c);box-shadow:0 10px 24px -12px rgba(42,95,184,.7)}
+.btn.wa{background-image:linear-gradient(120deg,#1c7a52,#17694a,#2a8556,#1c7a52);box-shadow:0 10px 24px -12px rgba(28,122,82,.7)}
+.btn.tt{background-image:linear-gradient(120deg,#b52848,#7c2f9c,#2a7aa0,#b52848);box-shadow:0 10px 24px -12px rgba(181,40,72,.65)}
+.btn.ai{background-image:linear-gradient(120deg,#5a45b4,#8a3fa6,#4f4fb8,#5a45b4);box-shadow:0 10px 24px -12px rgba(138,63,166,.7)}
+.btn.main:hover{box-shadow:0 14px 30px -10px rgba(91,79,208,.8)}
+.btn.komik:hover{box-shadow:0 14px 30px -10px rgba(42,95,184,.8)}
+.btn.wa:hover{box-shadow:0 14px 30px -10px rgba(28,122,82,.8)}
+.btn.tt:hover{box-shadow:0 14px 30px -10px rgba(181,40,72,.75)}
+.btn.ai:hover{box-shadow:0 14px 30px -10px rgba(138,63,166,.8)}
+
+/* kilau yang lewat berkala */
+.btn::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.16) 50%,transparent 65%);transform:translateX(-130%);animation:sweep 5.5s ease-in-out infinite;pointer-events:none}
+@keyframes sweep{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+.cta .btn:nth-child(2)::before{animation-delay:1.1s}
+.cta .btn:nth-child(3)::before{animation-delay:2.2s}
+.cta .btn:nth-child(4)::before{animation-delay:3.3s}
+
+/* tombol masuk satu per satu saat halaman dibuka */
+.hero .cta .btn{animation:btnIn .75s cubic-bezier(.2,.9,.2,1) backwards,flow 14s linear infinite}
+.hero .cta .btn:nth-child(1){animation-delay:1.3s,0s}
+.hero .cta .btn:nth-child(2){animation-delay:1.45s,0s}
+.hero .cta .btn:nth-child(3){animation-delay:1.6s,0s}
+.hero .cta .btn:nth-child(4){animation-delay:1.75s,0s}
+@keyframes btnIn{from{opacity:0;transform:translateY(26px) scale(.88)}}
+
+/* ikon bergerak sendiri */
+.btn.main .bi svg{animation:rocket 2.2s ease-in-out infinite}
+.btn.komik .bi svg{animation:tilt 4.5s ease-in-out infinite}
+.btn.wa .bi svg{animation:popi 3.6s ease-in-out infinite .6s}
+.btn.tt .bi svg{animation:bob 2.4s ease-in-out infinite}
+.btn.ai .bi svg{animation:spin 9s linear infinite}
+@keyframes tilt{0%,70%,100%{transform:rotate(0)}80%{transform:rotate(-16deg)}90%{transform:rotate(9deg)}}
+@keyframes popi{0%,70%,100%{transform:scale(1)}80%{transform:scale(1.28)}90%{transform:scale(.95)}}
+@keyframes bob{50%{transform:translateY(-3px) rotate(10deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
