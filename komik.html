@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b111a">
+<title>Neel Komik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b111a;--s:#141f33;--s2:#1c2a44;--ink:#f3f6fb;--mut:#8b97ad;--ac:#2d9bff;--yel:#ffd84a;--line:#2a3b5c}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html{color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.5 Rubik,system-ui,sans-serif;padding-bottom:calc(104px + env(safe-area-inset-bottom))}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+svg{width:1em;height:1em;fill:currentColor;flex:none}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.app{max-width:720px;margin:0 auto}
+header{background:#10171f;padding-top:env(safe-area-inset-top)}
+.hd{padding:12px 16px 14px}
+.logo{display:inline-block;font:600 1.5rem/1 Rubik;margin-bottom:12px}.logo i{font-style:normal;color:var(--ac)}
+.search{display:flex;align-items:center;gap:12px;background:var(--s2);border-radius:999px;padding:0 20px;height:52px}
+.search svg{font-size:24px;color:var(--mut)}
+.search input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--ink);font:inherit}
+body.det header,body.rd header,body.rd nav{display:none}
+section{padding:20px 16px 0}
+.sh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+h2{font:500 1.5rem/1.2 Rubik;text-transform:capitalize}
+.sh a{color:var(--ac);font-weight:500}
+.hs{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px}.hs::-webkit-scrollbar{display:none}
+.hc{flex:0 0 70%;max-width:260px}
+.th{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:var(--s)}
+.th img,.poster img{width:100%;height:100%;object-fit:cover;display:block}
+.th:after,.poster:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.hc h3{font:500 1rem/1.3 Rubik;margin:10px 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 10px}
+.poster{position:relative;aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:var(--s)}
+.new{position:absolute;top:0;left:0;z-index:1;background:var(--ac);color:#fff;font-weight:600;font-size:.78rem;padding:3px 12px 5px 10px;border-radius:0 0 14px 0}
+.ep{position:absolute;left:10px;bottom:8px;right:8px;z-index:1;font-weight:600;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.views{color:var(--mut);font-size:.85rem;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card h3{font:500 .95rem/1.3 Rubik;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.msg{padding:22px;border:1px dashed var(--line);border-radius:14px;color:var(--mut);grid-column:1/-1}
+.msg a{color:var(--ac)}
+.sk{animation:pulse 1.2s ease-in-out infinite}.sk .poster{background:var(--s2)}
+@keyframes pulse{50%{opacity:.45}}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 16px 0}.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:8px 18px;border-radius:999px;background:var(--s2);font-weight:500}.tab.on{background:var(--ac);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.chip{display:inline-flex;gap:6px;align-items:center;background:var(--s2);padding:7px 16px;border-radius:999px;font-weight:500;font-size:.95rem}
+.chip small{color:var(--mut)}
+.out .chip{background:none;border:1.5px solid #2f6b99}
+.banner{position:relative;min-height:min(70vh,520px);display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(transparent 50%,var(--bg) 97%),linear-gradient(rgba(0,0,0,.45),transparent 28%),var(--img) center top/cover}
+.top{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:12px;padding:calc(14px + env(safe-area-inset-top)) 16px 0}
+.back{width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.4);display:grid;place-items:center;font-size:24px}
+.bt{padding:0 20px 6px}.bt small{color:#dfe5f1}
+.bt h1{font:600 1.9rem/1.15 Rubik;margin:4px 0 12px}
+.pad{padding:0 20px}.pad h2{margin:26px 0 12px}
+.btns{display:flex;gap:14px;margin:18px 0 4px}
+.go,.subb{height:54px;border-radius:999px;display:flex;gap:10px;justify-content:center;align-items:center;font-weight:600}
+.go{flex:1.5;background:linear-gradient(90deg,#33b0ff,#1673d8);color:#fff}
+.subb{flex:1;background:var(--s2)}.subb.on{color:var(--yel)}
+.syn{color:#cfd6e4;line-height:1.7;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.syn.open{display:block}
+.lnk{color:var(--ac);font-weight:500;margin-top:6px}
+.tb{display:flex;gap:12px;margin-bottom:14px}
+.tb input{flex:1;min-width:0;height:52px;border-radius:16px;border:2px solid var(--line);background:none;color:var(--ink);font:inherit;padding:0 18px;outline:0}
+.tb input:focus{border-color:var(--ac)}
+.tb button{width:52px;height:52px;border-radius:16px;background:var(--s2);display:grid;place-items:center;font-size:24px}
+.el{display:grid;gap:12px}
+.ei{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#131d36;border-radius:18px;padding:16px 20px;width:100%;text-align:left}
+.ei b{font:500 1.05rem Rubik;display:block}.ei small{color:var(--mut)}
+.pl{width:40px;height:40px;border-radius:50%;background:#3a82e6;display:grid;place-items:center;font-size:22px;flex:none}
+.more{display:block;margin:22px auto 0;padding:12px 28px;border-radius:999px;background:var(--s2);font-weight:500}
+.note{color:var(--mut);font-size:.85rem;margin:14px 0}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#0d131c;border-top:1px solid #172133;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
+.ni{max-width:720px;margin:0 auto;display:flex;justify-content:space-around}
+.ni a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 22px;border-radius:28px;font-size:28px;color:#dfe5f1}
+.ni a span{display:none;font-size:.8rem;font-weight:600}
+.ni a.on{background:#3b3868;padding:10px 28px 8px}.ni a.on span{display:block}
+.rtop{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:rgba(11,17,26,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.rtop b{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pages img{display:block;width:100%;max-width:720px;margin:0 auto;min-height:120px;background:var(--s)}
+.rnav{display:flex;gap:12px;max-width:720px;margin:0 auto;padding:20px 16px calc(24px + env(safe-area-inset-bottom))}
+.rnav a{flex:1;height:52px;border-radius:999px;display:grid;place-items:center;background:var(--s2);font-weight:600}
+.rnav a.go{background:linear-gradient(90deg,#33b0ff,#1673d8)}.rnav a.off{opacity:.4;pointer-events:none}
+body.rd{padding-bottom:0}
+@media(min-width:700px){.app{max-width:1000px}.grid{grid-template-columns:repeat(5,1fr)}.ni{max-width:1000px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<header><div class="app hd">
+  <a class="logo" href="#/">Neel <i>Komik</i></a>
+  <form class="search" id="sf" role="search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg><input id="q" type="search" placeholder="Cari komik" aria-label="Cari komik" autocomplete="off"></form>
+</div></header>
+<main class="app" id="app"></main>
+<nav><div class="ni" id="nav"></div></nav>
+
+<script>
+const API="https://api.synoxcloud.xyz/komik",KEY="apikey=FREE";
+const $=s=>document.querySelector(s),app=$("#app"),E=encodeURIComponent;
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const ls={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+const BLOCK=/adult|hentai|ecchi|smut|sexual|shotacon|mature|gore|erotic|porn|dewasa/i;
+const P={home:"M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z",grid:"M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z",hist:"M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z",back:"M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z",play:"M8 5v14l11-7z",star:"M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z",sort:"M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z",open:"M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"};
+const I=Object.fromEntries(Object.entries(P).map(([k,v])=>[k,`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${v}"/></svg>`]));
+
+/* ---------- API ---------- */
+const cache=new Map();
+function req(path,body){
+  const k=path+(body?JSON.stringify(body):"");
+  if(cache.has(k))return cache.get(k);
+  const p=(async()=>{
+    let err;
+    for(let i=0;i<3;i++){
+      const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),30000);
+      try{
+        const r=body?await fetch(API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...body,apikey:"FREE"}),signal:ctl.signal}):await fetch(API+path+(path.includes("?")?"&":"?")+KEY,{signal:ctl.signal});
+        if(r.status>=500||r.status===429){err=new Error("Server "+r.status);await sleep(900);continue}
+        if(!r.ok){err=new Error("HTTP "+r.status);break}
+        const j=await r.json();
+        if(j.status===false){err=new Error(j.message||"Permintaan gagal");continue}
+        return j.result??j.data??j;
+      }catch(e){err=e.name==="AbortError"?new Error("Waktu habis"):e;await sleep(500)}finally{clearTimeout(to)}
+    }
+    throw err;
+  })();
+  cache.set(k,p);p.catch(()=>cache.delete(k));return p;
+}
+const arr=r=>Array.isArray(r)?r:[r?.data,r?.results,r?.items].find(Array.isArray)||[];
+const g=(o,...ks)=>{for(const k of ks){const v=o?.[k];if(v!=null&&v!==""&&!(Array.isArray(v)&&!v.length))return v}return""};
+const px=u=>API+"/webtoon/image?url="+E(u)+"&"+KEY;
+const big=u=>(u||"").replace(/\?resize=[^&]*(&quality=\d+)?$/,"");
+const kfmt=n=>n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?(n/1e3).toFixed(1)+"K":n;
+
+/* ---------- normalisasi ---------- */
+const kItem=a=>({src:"k",t:a.title||a.name||"",u:a.url||a.link||"",img:a.image||a.thumbnail||a.cover||"",type:a.type||"",sub:a.genre||a.views||"",ch:a.chapter||a.latest_chapter?.title||"",chu:a.chapter_url||a.latest_chapter?.url||"",fu:a.first_chapter?.url||""});
+const wItem=a=>({src:"wt",t:a.title,u:a.url,img:a.thumbnail,type:a.type==="CHALLENGE"?"Canvas":"Webtoon",sub:[...new Set(a.authors||[])].join(", "),ch:a.readCount?kfmt(a.readCount)+" dibaca":"",bad:a.unsuitableForChildren});
+const mt=a=>{const t=a.title??a.attributes?.title;return typeof t==="string"?t:(t?.en||Object.values(t||{})[0]||"Tanpa judul")};
+const mItem=a=>({src:"md",t:mt(a),u:String(a.id||""),img:a.cover||a.coverUrl||a.cover_url||a.image||a.thumbnail||"",type:"MangaDex",sub:g(a,"status")||a.attributes?.status||"",ch:"",raw:a});
+const ok=a=>a.t&&a.u&&!a.bad&&!BLOCK.test(a.sub+" "+a.type);
+const seen={};
+const imgOf=a=>a.src==="wt"?px(a.img):a.img;
+const href=a=>a.src==="k"?"#/k/"+E(a.u):a.src==="wt"?"#/wt/"+E(a.u):"#/md/"+E(a.u);
+const card=a=>{seen[a.u]=a;const f=imgOf(a);return `<a class="card" href="${href(a)}"><div class="poster"><img loading="lazy" referrerpolicy="no-referrer" src="${esc(a.src==="k"?big(f):f)}" data-f="${esc(f)}" onerror="this.onerror=null;this.src=this.dataset.f" alt="Cover ${esc(a.t)}">${a.type?`<b class="new">${esc(a.type)}</b>`:""}${a.ch?`<span class="ep">${esc(a.ch)}</span>`:""}</div>${a.sub?`<p class="views">${esc(a.sub)}</p>`:""}<h3>${esc(a.t)}</h3></a>`};
+const hcard=h=>`<a class="hc" href="${esc(h.href)}"><div class="th"><img loading="lazy" referrerpolicy="no-referrer" src="${esc(h.src==="wt"?px(h.img):h.img)}" alt=""><span class="ep">${esc(h.sub||"")}</span></div><h3>${esc(h.t)}</h3></a>`;
+const skel=n=>Array.from({length:n},()=>`<div class="card sk"><div class="poster"></div></div>`).join("");
+const msg=m=>`<p class="msg">${m}</p>`;
+const bad=e=>msg(`Data belum bisa dimuat (${esc(e.message)}). Coba muat ulang beberapa detik lagi. Kalau dibuka dari file lokal, buka lewat link Vercel.`);
+
+/* ---------- riwayat & favorit ---------- */
+const addHist=h=>{const l=ls.get("dk-hist",[]).filter(x=>x.k!==h.k);l.unshift(h);ls.set("dk-hist",l.slice(0,20))};
+const favs=()=>ls.get("dk-fav",[]);
+const isFav=u=>favs().some(x=>x.u===u);
+const toggleFav=a=>{let l=favs();l=l.some(x=>x.u===a.u)?l.filter(x=>x.u!==a.u):[a,...l];ls.set("dk-fav",l.slice(0,60))};
+
+/* ---------- halaman ---------- */
+let rid=0,homeTab="new",homeType="semua";
+function home(my){
+  const h=ls.get("dk-hist",[]);
+  app.innerHTML=(h.length?`<section><div class="sh"><h2>Terakhir Dibaca</h2><a href="#/riwayat">Selengkapnya ›</a></div><div class="hs">${h.slice(0,8).map(hcard).join("")}</div></section>`:"")+
+  `<div class="tabs" style="margin-top:18px" id="ht">${[["new","Series Baru"],["pop","Populer"]].map(([v,l])=>`<button class="tab ${homeTab===v?"on":""}" data-v="${v}">${l}</button>`).join("")}</div>
+  <div class="tabs" id="hy" style="margin-top:10px">${["semua","manga","manhwa","manhua"].map(v=>`<button class="tab ${homeType===v?"on":""}" data-v="${v}">${v[0].toUpperCase()+v.slice(1)}</button>`).join("")}</div>
+  <section><div class="grid" id="g">${skel(9)}</div><p class="note">Komik dimuat dari layanan pihak ketiga (Komiku, Webtoon, MangaDex).</p></section>`;
+  const load=async()=>{
+    const el=$("#g");el.innerHTML=skel(9);
+    try{
+      const r=await req(`/komiku/${homeTab==="new"?"new-series":"populer"}?type=semua`);if(my!==rid)return;
+      const all=arr(r).map(kItem).filter(ok),l=homeType==="semua"?all:all.filter(a=>a.type.toLowerCase()===homeType);
+      el.innerHTML=l.map(card).join("")||msg(all.length?"Tidak ada "+homeType+" di daftar ini. Coba jenis lain.":"Daftar ini sedang kosong dari server. Coba tab Series Baru, atau cari judulnya di kolom pencarian.");
+    }catch(e){if(my===rid)el.innerHTML=bad(e)}
+  };
+  const bind=(id,key)=>$(id).onclick=e=>{const b=e.target.closest("button");if(!b)return;if(key==="t")homeTab=b.dataset.v;else homeType=b.dataset.v;[...$(id).children].forEach(c=>c.classList.toggle("on",c===b));load()};
+  bind("#ht","t");bind("#hy","y");load();
+}
+
+async function search(src,q,my){
+  const S=[["k","Komiku"],["wt","Webtoon"],["md","MangaDex"]];
+  app.innerHTML=`<div class="tabs" style="margin-top:16px">${S.map(([v,l])=>`<a class="tab ${v===src?"on":""}" href="#/cari/${v}/${E(q)}">${l}</a>`).join("")}</div><section><div class="sh"><h2 style="text-transform:none">Hasil “${esc(q)}”</h2></div><div class="grid" id="g">${skel(6)}</div></section>`;
+  try{
+    const r=src==="k"?await req(`/komiku/search?q=${E(q)}&page=1`):src==="wt"?await req(`/webtoon/search?query=${E(q)}&page=1`):await req(`/mangadex/search?title=${E(q)}&limit=20`);
+    if(my!==rid)return;
+    const l=arr(r).map(src==="k"?kItem:src==="wt"?wItem:mItem).filter(ok);
+    $("#g").innerHTML=l.map(card).join("")||msg("Tidak ada hasil. Coba kata kunci lain atau pindah sumber di atas.");
+  }catch(e){if(my===rid)$("#g").innerHTML=bad(e)}
+}
+
+async function genres(my){
+  app.innerHTML=`<section><h2>Genre</h2><div class="chips" id="g">${msg("Memuat genre...")}</div></section>`;
+  try{
+    const l=arr(await req("/komiku/genre")).filter(x=>x.count>0&&!BLOCK.test(x.name+" "+x.slug));if(my!==rid)return;
+    $("#g").innerHTML=l.map(x=>`<a class="chip" href="#/genre/${E(x.slug)}">${esc(x.name)} <small>${x.count}</small></a>`).join("");
+  }catch(e){if(my===rid)$("#g").innerHTML=bad(e)}
+}
+
+async function genreList(slug,my){
+  if(BLOCK.test(slug)){app.innerHTML=`<section>${msg("Genre ini tidak tersedia.")}</section>`;return}
+  let page=1;
+  app.innerHTML=`<section><div class="sh"><h2>${esc(slug.replace(/-/g," "))}</h2><a href="#/genre">Semua genre ›</a></div><div class="grid" id="g">${skel(9)}</div><button class="more" id="more" hidden>Muat lagi</button></section>`;
+  const load=async()=>{
+    try{
+      const l=arr(await req(`/komiku/genre-detail?genre=${E(slug)}&page=${page}`)).map(kItem).filter(ok);if(my!==rid)return;
+      const el=$("#g");if(page===1)el.innerHTML="";
+      el.insertAdjacentHTML("beforeend",l.map(card).join(""));
+      if(page===1&&!l.length)el.innerHTML=msg("Belum ada komik di genre ini.");
+      $("#more").hidden=l.length<5;
+    }catch(e){if(my===rid&&page===1)$("#g").innerHTML=bad(e)}
+  };
+  $("#more").onclick=()=>{page++;load()};load();
+}
+
+const syn=t=>t?`<h2>Sinopsis</h2><p class="syn" id="syn">${esc(t)}</p><button class="lnk" id="more2">Selengkapnya</button>`:"";
+const bindSyn=()=>{const b=$("#more2");if(b)b.onclick=()=>{const s=$("#syn");s.classList.toggle("open");b.textContent=s.classList.contains("open")?"Sembunyikan":"Selengkapnya"}};
+const banner=(img,small,title,chips)=>`<div class="banner" style="--img:${esc(`url("${img}")`)}"><div class="top"><a class="back" href="#/" onclick="history.back();return false" aria-label="Kembali">${I.back}</a></div><div class="bt"><small>${esc(small)}</small><h1>${esc(title)}</h1></div></div>`;
+const favBtn=a=>`<button class="subb ${isFav(a.u)?"on":""}" id="fav">${I.star} ${isFav(a.u)?"Tersimpan":"Simpan"}</button>`;
+const bindFav=a=>{$("#fav").onclick=()=>{toggleFav(a);$("#fav").className="subb "+(isFav(a.u)?"on":"");$("#fav").innerHTML=I.star+" "+(isFav(a.u)?"Tersimpan":"Simpan")}};
+
+function findChapters(d){
+  const c=g(d,"chapters","chapter_list","chapterList","list");
+  const l=Array.isArray(c)?c:Object.values(d||{}).find(v=>Array.isArray(v)&&v.length&&typeof v[0]==="object"&&(v[0].url||v[0].link))||[];
+  return l.map(x=>({t:x.title||x.name||x.chapter||"Chapter",u:x.url||x.link||x.href||"",d:x.date||x.time||x.update||""})).filter(x=>x.u);
+}
+async function kDetail(u,my){
+  document.body.classList.add("det");
+  const s=seen[u]||{src:"k",u,t:"Komik",img:""};
+  app.innerHTML=`<div class="banner" style="--img:none"><div class="bt"><h1>Memuat...</h1></div></div>`;
+  let d={},err=null;try{d=await req(`/komiku/detail?url=${E(u)}`)}catch(e){err=e}
+  if(my!==rid)return;
+  const t=g(d,"title","name")||s.t,img=g(d,"image","cover","thumbnail","poster")||s.img;
+  const a={...s,u,t,img};
+  const gens=[].concat(g(d,"genres","genre","tags")||s.sub||[]).flatMap(x=>typeof x==="string"?x.split(/[,•]/):[x?.name||x?.title||""]).map(x=>x.trim()).filter(x=>x&&!BLOCK.test(x));
+  const info=[g(d,"type")||s.type,g(d,"status"),[].concat(g(d,"author","pengarang","authors")).join(", ")].filter(Boolean);
+  let chs=findChapters(d);
+  const first=chs.length?chs[chs.length-1].u:(s.fu||s.chu),latest=chs.length?chs[0].u:s.chu;
+  addHist({k:u,src:"k",t,img,href:"#/k/"+E(u),sub:"Komiku"});
+  app.innerHTML=banner(big(img),info.join(" • ")||"Komiku",t)+`<div class="pad">
+    <div class="chips out">${gens.slice(0,8).map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>
+    <div class="btns">${first?`<a class="go" href="${esc(first)}" target="_blank" rel="noopener">${I.play} Mulai Baca</a>`:""}${favBtn(a)}</div>
+    ${err?msg(`Detail belum bisa dimuat (${esc(err.message)}). <a href="javascript:location.reload()">Muat ulang</a>`):""}
+    ${syn(g(d,"synopsis","sinopsis","description","desc"))}
+    <h2>Daftar Chapter</h2>
+    ${chs.length?`<div class="tb"><input id="cq" type="search" placeholder="Cari chapter" aria-label="Cari chapter"><button id="cs" aria-label="Urutkan">${I.sort}</button></div><div class="el" id="cl"></div>`:(latest?`<div class="el"><a class="ei" href="${esc(latest)}" target="_blank" rel="noopener"><div><b>${esc(s.ch||"Chapter terbaru")}</b><small>Chapter terbaru</small></div><span class="pl">${I.play}</span></a></div>`:msg("Daftar chapter belum tersedia."))}
+    <p class="note">Chapter dibuka di komiku.org pada tab baru.</p></div>`;
+  bindSyn();bindFav(a);
+  if(chs.length){
+    let desc=true;const draw=()=>{const q=$("#cq").value.toLowerCase();const l=(desc?chs:[...chs].reverse()).filter(x=>x.t.toLowerCase().includes(q));$("#cl").innerHTML=l.map(x=>`<a class="ei" href="${esc(x.u)}" target="_blank" rel="noopener"><div><b>${esc(x.t)}</b><small>${esc(x.d)}</small></div><span class="pl">${I.play}</span></a>`).join("")||msg("Chapter tidak ditemukan.")};
+    $("#cq").oninput=draw;$("#cs").onclick=()=>{desc=!desc;draw()};draw();
+  }
+}
+
+function wtDetail(u,my){
+  document.body.classList.add("det");
+  const s=seen[u]||{src:"wt",u,t:"Webtoon",img:"",sub:""};
+  const last=ls.get("dk-hist",[]).find(x=>x.k===u);
+  const lastEp=last?+(last.href.split("/").pop()):0;
+  app.innerHTML=banner(px(s.img),s.type||"Webtoon",s.t)+`<div class="pad"><div class="chips out">${s.sub?`<span class="chip">${esc(s.sub)}</span>`:""}${s.ch?`<span class="chip">${esc(s.ch)}</span>`:""}</div>
+  <div class="btns"><a class="go" href="#/baca/wt/${E(u)}/${lastEp||1}">${I.play} ${lastEp?"Lanjut Ep "+lastEp:"Baca Episode 1"}</a>${favBtn(s)}</div>
+  <h2>Pilih Episode</h2><div class="tb"><input id="ep" type="number" min="1" value="${lastEp||1}" inputmode="numeric" aria-label="Nomor episode"><button id="goep" aria-label="Baca">${I.play}</button></div>
+  <p class="note">Masukkan nomor episode, lalu tekan tombol putar. Gambar halaman dimuat lewat server API.</p></div>`;
+  bindFav(s);
+  const go=()=>{const n=Math.max(1,parseInt($("#ep").value)||1);location.hash="#/baca/wt/"+E(u)+"/"+n};
+  $("#goep").onclick=go;$("#ep").onkeydown=e=>{if(e.key==="Enter")go()};
+}
+
+function mdDetail(id,my){
+  document.body.classList.add("det");
+  const s=seen[id]||{src:"md",u:id,t:"MangaDex",img:"",sub:""},raw=s.raw||{};
+  const chs=(Array.isArray(raw.chapters)?raw.chapters:[]).map(c=>({id:c.id,t:(c.chapter?"Chapter "+c.chapter:"")+(c.title?" "+c.title:"")||"Chapter"})).filter(c=>c.id);
+  app.innerHTML=banner(s.img,"MangaDex",s.t)+`<div class="pad"><div class="chips out">${s.sub?`<span class="chip">${esc(s.sub)}</span>`:""}</div>
+  <div class="btns"><a class="go" href="https://mangadex.org/title/${esc(id)}" target="_blank" rel="noopener">${I.open} Buka di MangaDex</a>${favBtn(s)}</div>
+  ${syn(typeof g(raw,"description")==="string"?g(raw,"description"):(g(raw,"description")?.en||""))}
+  <h2>Baca Chapter</h2>
+  ${chs.length?`<div class="el">${chs.map(c=>`<a class="ei" href="#/baca/md/${E(c.id)}/${E(id)}"><div><b>${esc(c.t)}</b></div><span class="pl">${I.play}</span></a>`).join("")}</div>`:""}
+  <div class="tb" style="margin-top:12px"><input id="cid" placeholder="Tempel ID chapter" aria-label="ID chapter" autocomplete="off"><button id="gocid" aria-label="Baca">${I.play}</button></div>
+  <p class="note">Tempel ID chapter dari MangaDex (bagian akhir link chapter) untuk membacanya di sini.</p></div>`;
+  bindSyn();bindFav(s);
+  const go=()=>{const v=$("#cid").value.trim();if(v)location.hash="#/baca/md/"+E(v)+"/"+E(id)};
+  $("#gocid").onclick=go;$("#cid").onkeydown=e=>{if(e.key==="Enter")go()};
+}
+
+const IMG=/^https?:\/\/\S+\.(jpe?g|png|webp|gif|avif)(\?\S*)?$/i;
+function extractImgs(r){
+  const pick=o=>{for(const k of["images","pages","imageList","image_list","panels","files","urls","data","result","chapter"]){const v=o?.[k];if(Array.isArray(v)&&v.length){const l=v.map(x=>typeof x==="string"?x:x?.url||x?.src||x?.image||"").filter(x=>/^https?:/.test(x));if(l.length)return l}}return null};
+  const d=pick(r)||pick(r?.result)||pick(r?.data);if(d)return[...new Set(d)];
+  const out=[];(function w(v,n){if(n>6||v==null)return;if(typeof v==="string"){if(IMG.test(v)||/pstatic\.net/.test(v))out.push(v)}else if(Array.isArray(v))v.forEach(x=>w(x,n+1));else if(typeof v==="object")Object.values(v).forEach(x=>w(x,n+1))})(r,0);
+  return[...new Set(out)];
+}
+async function reader(src,id,extra,my){
+  document.body.classList.add("rd");
+  const wt=src==="wt",ep=wt?+extra||1:0,s=seen[id]||{};
+  const back=wt?"#/wt/"+E(id):"#/md/"+E(extra);
+  const nav=wt?`<div class="rnav"><a class="${ep<=1?"off":""}" href="#/baca/wt/${E(id)}/${ep-1}">‹ Sebelumnya</a><a class="go" href="#/baca/wt/${E(id)}/${ep+1}">Berikutnya ›</a></div>`:`<div class="rnav"><a href="${back}">Kembali</a></div>`;
+  app.innerHTML=`<div class="rtop"><a class="back" href="${back}" aria-label="Kembali">${I.back}</a><b>${esc(s.t||"Baca")}${wt?" • Episode "+ep:""}</b></div><div class="pages" id="pg"></div><section id="st">${msg("Memuat halaman...")}</section>${nav}`;
+  scrollTo(0,0);
+  if(wt&&s.t)addHist({k:id,src:"wt",t:s.t,img:s.img,href:"#/baca/wt/"+E(id)+"/"+ep,sub:"Episode "+ep});
+  try{
+    const r=wt?await req(`/webtoon/read?url=${E(id.replace(/\/list\?/,`/episode-${ep}/viewer?`))}`):await req("/mangadex/download",{id,quality:"data"});
+    if(my!==rid)return;
+    const l=extractImgs(r);if(!l.length)throw new Error("Halaman tidak ditemukan. Episode atau chapter mungkin tidak ada");
+    $("#st").remove();
+    $("#pg").innerHTML=l.map((u,i)=>`<img loading="${i<2?"eager":"lazy"}" referrerpolicy="no-referrer" src="${esc(wt||/pstatic\.net/.test(u)?px(u):u)}" alt="Halaman ${i+1}">`).join("");
+  }catch(e){if(my===rid)$("#st").innerHTML=bad(e)}
+}
+
+function riwayat(){
+  const h=ls.get("dk-hist",[]),f=favs();
+  app.innerHTML=`<section><div class="sh"><h2>Terakhir Dibaca</h2></div>${h.length?`<div class="hs">${h.map(hcard).join("")}</div>`:msg("Belum ada riwayat bacaan.")}</section>
+  <section><div class="sh"><h2>Favorit</h2></div><div class="grid">${f.length?f.map(card).join(""):msg("Belum ada favorit. Tekan Simpan di halaman komik.")}</div></section>`;
+}
+
+/* ---------- router ---------- */
+const NAV=[["#/","home","Beranda"],["#/genre","grid","Genre"],["#/riwayat","hist","Riwayat"],["index.html","back","Portofolio"]];
+function route(){
+  const my=++rid;document.body.classList.remove("det","rd");
+  const p=location.hash.slice(2).split("/").map(decodeURIComponent),r=p[0]||"";
+  $("#nav").innerHTML=NAV.map(([h,i,l])=>`<a href="${h}" class="${(h==="#/"&&!r)||(r&&h==="#/"+r)||(r==="genre"&&h==="#/genre")?"on":""}" aria-label="${l}">${I[i]}<span>${l}</span></a>`).join("");
+  scrollTo(0,0);
+  if(!r)return home(my);
+  if(r==="cari")return search(p[1]||"k",p[2]||"",my);
+  if(r==="genre")return p[1]?genreList(p[1],my):genres(my);
+  if(r==="k")return kDetail(p[1],my);
+  if(r==="wt")return wtDetail(p[1],my);
+  if(r==="md")return mdDetail(p[1],my);
+  if(r==="baca")return reader(p[1],p[2],p[3],my);
+  if(r==="riwayat")return riwayat();
+  app.innerHTML=`<section>${msg("Halaman tidak ditemukan. <a href='#/'>Ke beranda</a>")}</section>`;
+}
+$("#sf").addEventListener("submit",e=>{e.preventDefault();const q=$("#q").value.trim();if(q)location.hash="#/cari/k/"+E(q)});
+addEventListener("hashchange",route);route();
+</script>
+</body>
+</html>
